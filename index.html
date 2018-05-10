@@ -3,17 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>DialogFlow to Alexa Converter</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-
-<form action="convert.php" method="post" enctype="multipart/form-data" name="form1" id="form1" style="text-align:center;">
-
-    Select file
-    <input name="ufile" type="file" id="ufile" size="50"/><br>
-    <label for="invocationName">Invocation Name</label><input name="invocationName" type="text" id="invocationName" size="100"/><br><br>
-
-    <input type="submit" name="Submit" value="Upload"/>
-
-</form>
+<div id="header">
+    <a class="donate" href="https://www.patreon.com/digitalhigh">
+        <img src="https://img.shields.io/badge/Donate-Patreon-green.svg"/>
+    </a>
+    <a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JFPDAVB2WBJEC">
+        <img src="https://img.shields.io/badge/Donate-PayPal-green.svg"/>
+    </a>
+</div>
+<div id="parent">
+    <form action="convertV2.php" method="post" enctype="multipart/form-data" name="form1" id="form1">
+        <h2>Convert an exported agent.</h2>
+        <h5>Use this to convert a full agent export from Settings in dialogflow. (Recommended)</h5>
+        <label for="language">Language</label>
+        <select name="language" id="language">
+            <option value="en-US" selected>English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="en-AU">English (AU)</option>
+            <option value="en-CA">English (CA)</option>
+            <option value="en-IN">English (IN)</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="ja">Japanese</option>
+        </select>
+        <br><br>
+        <input name="ufile" type="file" id="ufile" size="50" required/>
+        <br><br>
+        <input type="submit" name="Submit" value="Upload"/>
+    </form>
+    <br><BR>
+    <form action="convert.php" method="post" enctype="multipart/form-data" name="form1" id="form2" style="text-align:center;">
+        <h2>Convert an Alexa "integrations" package.</h2>
+        <h5>Use this to convert the output of Integrations->Alexa->"Export For Alexa"</h5>
+        <label for="invocationName">Invocation Name</label>
+        <input name="invocationName" type="text" id="invocationName" required/>
+        <br><br>
+        <input name="ufile" type="file" id="ufilev1" size="50" required/>
+        <br><br>
+        <input type="submit" name="Submit" value="Upload"/>
+    </form>
+</div>
 </body>
 </html>
