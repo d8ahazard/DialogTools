@@ -243,6 +243,7 @@ function msg($msg)
     <meta charset='UTF-8'>
     <title>DialogFlow to Alexa Converter</title>
     <link rel="stylesheet" href="./style.css">
+    <link href="https://assets.dialogflow.com/common/favicon.png" type="image/png" rel="shortcut icon">
 </head>
 <body>
 <script type='text/javascript'>
