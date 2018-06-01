@@ -1,44 +1,20 @@
 <?php
+$dir = extractAgent();
+
 $_SESSION['msg'] = [];
 $_SESSION['json'] = "";
 
-$fileName = $_FILES['ufile']['name'] ?? false;
 #TODO: GET LANGUAGE FROM POST
-$_SESSION['lang'] = $_POST['language'] ?? "en-US";
-msg("Language set to ".$_SESSION['lang']);
-
-if (!$fileName) {
-    msg("Error, Please specify a filename");
-    echoDie();
-}
-
-$num = rand(0000, 9999);
-$randomPath = dirname(__FILE__) . "/" . $num;
-$randomFileName = $num . ".zip";
-mkdir($randomPath, 0777, true);
-
-$path = "$randomPath/$randomFileName";
-if (!$fileName) echo "No filename? $fileName <BR>";
-if (!move_uploaded_file($_FILES['ufile']['tmp_name'], $path)) echo "Error copying file $fileName to $path <BR>";
-$zip = new ZipArchive;
-$res = $zip->open($path);
-if ($res === TRUE) {
-    $zip->extractTo("$randomPath/");
-    $zip->close();
-} else {
-    msg('Extraction error, please make sure the zip provided is a valid export from DialogFlow.');
-    echoDie();
-}
-
-$dir = $randomPath;
+$lang = $_POST['language'] ?? "en-US";
+msg("Language set to $lang.");
 
 $agent = json_decode(file_get_contents("$dir/agent.json"), true);
 $package = json_decode(file_get_contents("$dir/package.json"), true);
 $entitiesDir = "$dir/entities";
 $intentsDir = "$dir/intents";
-$invocationName = strtolower($agent['googleAssistant']['invocationName']);
 $intentFiles = glob("$intentsDir/*");
 $entityFiles = glob("$entitiesDir/*");
+$invocationName = strtolower($agent['googleAssistant']['invocationName']);
 $customs = [];
 $slots = [];
 $intents = [];

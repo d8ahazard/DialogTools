@@ -1,26 +1,10 @@
 <?php
+require_once(dirname(__FILE__) . "/utils.php");
 $_SESSION['json'] = [];
 $_SESSION['msg'] = [];
-$fileName = $_FILES['ufilev1']['name'];
-$invocationName = $_POST['invocationName'] ?? "foo";
-$num = rand(0000,9999);
-$randomPath=dirname(__FILE__)."/".$num;
-$randomFileName=$num.".zip";
-mkdir($randomPath, 0777, true);
-
-$path = "$randomPath/$randomFileName";
-if(!move_uploaded_file($_FILES['ufile']['tmp_name'],$path)) msg("Error copying file $fileName to $path");
-$zip = new ZipArchive;
-$res = $zip->open($path);
-if (!$res) {
-    msg('Extraction error, please make sure the zip provided is a valid export from DialogFlow.');
-
-} else {
-    $zip->extractTo("$randomPath/");
-    $zip->close();
-
-
-    $dir = $randomPath;
+$invocationName = $_POST['invocationName'] ?? false;
+if (!$invocationName) bye("Please specify an invocation name.");
+$dir = extractAgent();
     $samples = [];
     $utterances = file("$dir/SampleUtterances.txt", FILE_IGNORE_NEW_LINES);
     foreach ($utterances as $line) {
@@ -109,7 +93,7 @@ if (!$res) {
     if (count($types)) $json['interactionModel']['languageModel']['types'] = $types;
     msg("Conversion complete.");
     $_SESSION['json'] = json_encode($json, JSON_PRETTY_PRINT);
-}
+
 
 recurseRmdir($randomPath);
 
@@ -135,7 +119,7 @@ function msg($msg)
 <html lang='en'>
 <head>
     <meta charset='UTF-8'>
-    <title>DialogFlow to Alexa Converter</title>
+    <title>DialogFlow Conversion Tools</title>
     <link rel="stylesheet" href="./style.css">
     <link href="https://assets.dialogflow.com/common/favicon.png" type="image/png" rel="shortcut icon">
 </head>

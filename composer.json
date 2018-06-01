@@ -1,0 +1,11 @@
+{
+  "repositories": [
+    {
+      "type": "pear",
+      "url": "pear.php.net"
+    }
+  ],
+  "require": {
+    "google/cloud-translate": "v1.0.1"
+  }
+}
